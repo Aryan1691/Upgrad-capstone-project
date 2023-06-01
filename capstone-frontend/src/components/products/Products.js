@@ -23,6 +23,7 @@ import './Product.css'
 import ProductCard from "../productcard/ProductCard";
 import ImageList from '@mui/material/ImageList';
 import { useNavigate } from "react-router-dom";
+import Product from './product/Product';
 const style = {
   position: "absolute",
   left: "35%",
@@ -53,7 +54,6 @@ function Copyright(props) {
 }
 const defaultTheme = createTheme();
 function Products() {
-  
   const navigate = useNavigate()
   let token = localStorage.getItem('token')
   const [age, setAge] = React.useState('');
@@ -68,6 +68,16 @@ function Products() {
   async function fetchProducts() {
     let res = await axios.get(url);
     let obj = res.data;
+    let filter = localStorage.getItem('filter');
+    if(filter=='low-to-high'){
+obj=obj.sort((a,b)=>a.price-b.price);
+    }else if(filter=='high-to-low'){
+      obj=obj.sort((a,b)=>b.price-a.price);
+    }else if(filter=='newest'){
+      obj =obj.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }else{
+      obj=obj.reverse();
+    }
     let arrProducts=obj.map((item,index)=>{
       console.log('key is  > '+ item._id)
         return <ProductCard dltClick={deleteProduct} navToProduct={navigateProduct} name={item.name} id = {item._id} key={index} desc={item.description} imgUrl={item.imageURL} price={item.price}/>
@@ -76,6 +86,7 @@ function Products() {
   }
   async function deleteProduct(key){
     let dltURL = `http://localhost:3001/api/v1/products/${key}`
+
     let res = await axios.delete(dltURL,{
       headers: {
         'x-auth-token': `${token}`,
@@ -89,7 +100,7 @@ function Products() {
   }
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [<Header/>]);
   const handleProduct= async (event)=>{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -108,7 +119,7 @@ function Products() {
       manufacture:currManufacturer,
       availableItems:currItemAvailablity,
       imageURL:currImageURL,}
-      console.log(obj)
+    console.log(obj)
    try{
     let res= await axios.post(url,JSON.stringify(obj),{headers:{
       "content-type":"application/json",
@@ -164,6 +175,7 @@ function Products() {
                         fullWidth
                         id="productName"
                         label="Product Name"
+                        
                         inputProps={{ maxLength: 50, minLength: 5 }}
                         autoFocus
                       />
@@ -200,6 +212,7 @@ function Products() {
                         label="price"
                         name="price"
                         autoComplete="price"
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -211,6 +224,7 @@ function Products() {
                         type="number"
                         id="itemAvailablity"
                         autoComplete="itemAvailablity"
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -222,6 +236,7 @@ function Products() {
                         type="url"
                         id="imageURL"
                         autoComplete="imageURL"
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -233,6 +248,7 @@ function Products() {
                         type="name"
                         id="manufacturer"
                         autoComplete="manufacturer"
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>

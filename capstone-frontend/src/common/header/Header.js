@@ -65,16 +65,18 @@ const drawerWidth = 240;
 
 function Header(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [alignment, setAlignment] = React.useState("web");
+  const [alignment, setAlignment] = React.useState("default");
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
+    localStorage.setItem("filter",newAlignment);
+
   };
   const navigate=useNavigate();
   const handleLogOut=()=>{
     navigate("/")
   }
-  if (props.role == "user") {
+  if (props.role === "user") {
     const { window } = props;
 
     const handleDrawerToggle = () => {
@@ -96,11 +98,12 @@ function Header(props) {
             onChange={handleChange}
             orientation="vertical"
             aria-label="Platform"
+            variant="contained"
           >
-            <ToggleButton value="default">Default</ToggleButton>
-            <ToggleButton value="low-to-high">Low-TO-High</ToggleButton>
-            <ToggleButton value="high-to-low">High-To-Low</ToggleButton>
-            <ToggleButton value="newest">Newest</ToggleButton>
+            <ToggleButton color="secondary" sx={{color:"black"}} value="default">Default</ToggleButton>
+            <ToggleButton color="secondary" value="low-to-high" sx={{color:"black"}}>Low-To-High</ToggleButton>
+            <ToggleButton color="secondary" value="high-to-low" sx={{color:"black"}}>High-To-Low</ToggleButton>
+            <ToggleButton  color="secondary" value="newest" sx={{color:"black"}}>Newest</ToggleButton>
           </ToggleButtonGroup>
         </List>
         <Divider />

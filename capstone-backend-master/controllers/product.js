@@ -45,23 +45,37 @@ async function saveProduct(req, res) {
     }
 }
 
-async function updateProductDetails(req, res) {
-    let product = await Product.findById(req.params.id);
+// async function updateProductDetails(req, res) {
+//     let product = await Product.findById(req.params.id);
 
-    if(!product) {
-        res.status(404).send(`Product with id ${req.params.id} not found`);
-        return;
-    }
+//     if(!product) {
+//         res.status(404).send(`Product with id ${req.params.id} not found`);
+//         return;
+//     }
 
-    const requestBody = req.body;
+//     const requestBody = req.body;
     
+//     try {
+//         const updatedProduct = await Product.findByIdAndUpdate(req.params.id, requestBody);
+//         res.send(updatedProduct); 
+//     }  catch(ex) {
+//         return res.status(400).send(ex.message);
+//     }
+// }
+async function updateProductDetails(req, res) {
+    const { id } = req.params;
+    const requestBody = req.body;
+  
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(req.params.id, requestBody);
-        res.send(updatedProduct); 
-    }  catch(ex) {
-        return res.status(400).send(ex.message);
+      const updatedProduct = await Product.findByIdAndUpdate(id, requestBody, { new: true });
+      if (!updatedProduct) {
+        return res.status(404).send(`Product with id ${id} not found`);
+      }
+      res.send(updatedProduct);
+    } catch (ex) {
+      return res.status(400).send(ex.message);
     }
-}
+  }
 
 async function deleteProduct(req, res) {
     try {

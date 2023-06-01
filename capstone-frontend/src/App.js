@@ -7,6 +7,7 @@ import SignUp from './components/signup/SignUp';
 import Products from './components/products/Products';
 import Product from './components/products/product/Product';
 import { useEffect } from 'react';
+import ProductDetailPage from './components/ProductDetailPage/ProductDetailPage';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/SignUp' element={<SignUp/>}/>
         <Route path='/Products' element={<Products/>}/>
         <Route path='/Products/:id' element={<Product/>}/>
+        <Route path='/productDetailPage/:id' element={<ProductDetailPage/>}/>
       </Routes>
     </div>
   );
