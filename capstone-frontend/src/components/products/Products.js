@@ -69,11 +69,11 @@ function Products() {
     let res = await axios.get(url);
     let obj = res.data;
     let filter = localStorage.getItem('filter');
-    if(filter=='low-to-high'){
+    if(filter==='low-to-high'){
 obj=obj.sort((a,b)=>a.price-b.price);
-    }else if(filter=='high-to-low'){
+    }else if(filter==='high-to-low'){
       obj=obj.sort((a,b)=>b.price-a.price);
-    }else if(filter=='newest'){
+    }else if(filter==='newest'){
       obj =obj.sort((a, b) => new Date(b.date) - new Date(a.date));
     }else{
       obj=obj.reverse();

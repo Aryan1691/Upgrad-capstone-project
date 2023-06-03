@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import '../ProductDetailPage/ProductDetailPage.css'
 const ProductDetailPage = () => {
+  const Navigate= useNavigate();
+  const { id }  = useParams();
+  const Change = ()=>{
+Navigate(`/OrderPage/${id}`)
+  }
 
-    const { id }  = useParams();
+   
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -39,7 +44,7 @@ const ProductDetailPage = () => {
           <div>price :<span className='changes'>{product.price}rs</span> </div>
           <div>category :<span className='changes'>{product.category}</span> </div>
           <br></br>
-          <button>
+          <button onClick={Change}>
     Place Order 
 </button>
         </div>

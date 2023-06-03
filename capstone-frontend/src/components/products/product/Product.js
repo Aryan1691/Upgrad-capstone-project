@@ -206,7 +206,7 @@ function Product() {
                   id="manufacturer"
                   autoComplete="manufacturer"
                   defaultValue={"You can't change this "}
-                  readOnly
+                  disabled
                   focused
                 />
               </Grid>

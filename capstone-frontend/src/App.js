@@ -8,6 +8,7 @@ import Products from './components/products/Products';
 import Product from './components/products/product/Product';
 import { useEffect } from 'react';
 import ProductDetailPage from './components/ProductDetailPage/ProductDetailPage';
+import HorizontalLinearStepper from './components/OrderPage/OrderPage';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='/Products' element={<Products/>}/>
         <Route path='/Products/:id' element={<Product/>}/>
         <Route path='/productDetailPage/:id' element={<ProductDetailPage/>}/>
+        <Route path='/OrderPage/:id' element={<HorizontalLinearStepper/>}/>
       </Routes>
     </div>
   );
